@@ -24,11 +24,11 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Install depencencies
-        working-directory: ../meetup-frontend
+        working-directory: ./meetup-frontend
         run: npm ci
 
       - name: Build dist
-        working-directory: ../meetup-frontend
+        working-directory: ./meetup-frontend
         run: npm run build
 
       - name: Deploy to AWS S3
