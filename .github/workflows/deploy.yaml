@@ -42,4 +42,4 @@ jobs:
           path: ./meetup-frontend/dist
 
       - name: Deploy to GitHub Pages
-        user: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v1
