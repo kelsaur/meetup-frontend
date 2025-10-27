@@ -35,11 +35,3 @@ jobs:
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --follow-symlinks --delete
-
-      - name: Upload dist
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./meetup-frontend/dist
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
