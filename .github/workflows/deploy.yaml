@@ -21,15 +21,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Node.js
-        working-directory: ./meetup-frontend
+        working-directory: ../meetup-frontend
         uses: actions/setup-node@v3
 
       - name: Install depencencies
-        working-directory: ./meetup-frontend
+        working-directory: ../meetup-frontend
         uses: npm ci
 
       - name: Build dist
-        working-directory: ./meetup-frontend
+        working-directory: ../meetup-frontend
         uses: npm run build
 
       - name: Deploy to AWS S3
