@@ -1,7 +1,8 @@
-import { Routes, Route } from 'react-router-dom'
 import MeetupList from './pages/MeetupList'
-
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Landing from './pages/Landing';
+import './App.css';
 
 
 function App() {
@@ -21,4 +22,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
