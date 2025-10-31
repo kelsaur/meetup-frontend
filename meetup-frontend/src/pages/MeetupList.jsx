@@ -9,9 +9,11 @@ function MeetupList() {
     <>
       <div className="p-4">
         <Header />
-        <div className="flex flex-col gap-10">
-          <SearchInput />
-          <div className="flex flex-col gap-3">
+        <main className="flex flex-col gap-10">
+          <section>
+            <SearchInput />
+          </section>
+          <section aria-label="Lista av alla meetups" className="flex flex-col gap-3">
             <MeetupCard />
             <MeetupCard />
             <MeetupCard />
@@ -23,8 +25,8 @@ function MeetupList() {
             <MeetupCard />
             <MeetupCard />
             <MeetupCard />
-          </div>
-        </div>
+          </section>
+        </main>
       </div>
       <Navbar />
     </>
