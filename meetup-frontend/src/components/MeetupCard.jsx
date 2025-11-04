@@ -3,8 +3,12 @@ import HostIcon from "../assets/host_icon.png";
 import TimeIcon from "../assets/time_icon.png";
 import LocationIcon from "../assets/location_icon.png";
 
-function MeetupCard({ meetup }) {
+function MeetupCard({ meetup, className }) {
   const { _id, title, description, date, location, host } = meetup;
+
+  const commonCardClass =
+    "flex flex-col bg-[#d2d4d9] p-3 w-full gap-4 rounded-2xl";
+  const finalClasses = `${commonCardClass} ${className}`;
 
   const formatDate = (iso) =>
     new Date(iso).toLocaleString("sv-SE", {
@@ -14,7 +18,7 @@ function MeetupCard({ meetup }) {
 
   return (
     <Link to={`/meetup/${_id}`} className="flex flex-col">
-      <article className="flex flex-col bg-[#d2d4d9] p-3 w-full gap-4 rounded-2xl">
+      <article className={finalClasses}>
         <header className="meetup-card flex flex-col items-start">
           <h3 className="meetup-title text-xl">{title}</h3>
           <p className="meetup-description text-sm line-clamp-2">
