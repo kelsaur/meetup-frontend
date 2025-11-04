@@ -30,6 +30,13 @@ function Register() {
     try {
       const response = await createUser(userData);
       console.log('Registrering lyckades:', response);
+      
+      if (response.user && response.user.name) {
+        localStorage.setItem('userName', response.user.name);
+      } else {
+        localStorage.setItem('userName', username);
+      }
+      
       navigate('/login');
     } catch (err) {
       console.error('Fel vid registrering:', err.message || err);

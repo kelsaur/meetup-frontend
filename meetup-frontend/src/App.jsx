@@ -17,10 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} /> 
         <Route path="/dashboard" element={<MeetupList />} />
         <Route path="/meetup/:id" element={<MeetupDetail />} />
-        <Route path="/profile" element={<Profile />} />
-
-        
-        
+        <Route path="/profile" element={<Profile />} />   
       </Routes>
     </>
   )

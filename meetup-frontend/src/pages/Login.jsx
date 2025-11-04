@@ -29,6 +29,10 @@ function Login() {
       const response = await loginUser(credentials);
       console.log('Inloggning lyckades:', response);
       
+      if (response.user && response.user.name) {
+        localStorage.setItem('userName', response.user.name);
+      }
+      
       navigate('/dashboard');
     } catch (err) {
       console.error('Fel vid inloggning:', err.message || err);
