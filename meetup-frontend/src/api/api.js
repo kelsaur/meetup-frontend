@@ -48,11 +48,11 @@ export const getMeetups = async () => {
   }
 };
 
-export const getMeetupById = async () => {
-  const res = await fetch(`${API_URL}/api/meetups/${meetup.id}`);
-  const meetup = await res.json();
-
-  console.log(meetup);
+export const getMeetupById = async (id) => {
+  const response = await fetch(`${API_URL}/api/meetups/${id}`, {
+    headers: { Accept: "application/json" },
+  });
+  return handleApiResponse(response);
 };
 
 // createUser - skapa konto

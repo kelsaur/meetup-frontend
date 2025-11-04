@@ -13,7 +13,7 @@ function MeetupCard({ meetup }) {
     });
 
   return (
-    <Link to={`/meetups/${_id}`} className="flex flex-col">
+    <Link to={`/meetup/${_id}`} className="flex flex-col">
       <article className="flex flex-col bg-[#d2d4d9] p-3 w-full gap-4 rounded-2xl">
         <header className="meetup-card flex flex-col items-start">
           <h3 className="meetup-title text-xl">{title}</h3>
