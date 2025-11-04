@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import MeetupCard from '../components/MeetupCard';
-import { getUser, getUserMeetups } from '../api/api';
+
+const API_URL = "https://meetup-backend-latest-pdua.onrender.com";
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -15,7 +16,6 @@ function Profile() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      // Kolla om användaren är inloggad
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
       
@@ -27,20 +27,28 @@ function Profile() {
       try {
         setLoading(true);
         
-        // Hämta användarinfo
-        const userData = await getUser(userId);
-        setUser(userData);
+        const mockUser = {
+          id: userId,
+          name: localStorage.getItem('userName') || 'Användare',
+        };
+        setUser(mockUser);
         
-        // Hämta användarens meetups
-        const meetupsData = await getUserMeetups(userId);
+        const response = await fetch(`${API_URL}/api/meetups/my-meetups`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Kunde inte hämta meetups');
+        }
+
+        const data = await response.json();
         
-        // Dela upp i kommande och tidigare meetups
-        const now = new Date();
-        const upcoming = meetupsData.filter(meetup => new Date(meetup.date) >= now);
-        const past = meetupsData.filter(meetup => new Date(meetup.date) < now);
-        
-        setUpcomingMeetups(upcoming);
-        setPastMeetups(past);
+        setUpcomingMeetups(data.upcomingMeetups || []);
+        setPastMeetups(data.pastMeetups || []);
         
       } catch (err) {
         console.error('Error fetching user data:', err);
@@ -53,10 +61,17 @@ function Profile() {
     fetchUserData();
   }, [navigate]);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    navigate('/');
+  };
+
   if (loading) {
     return (
       <>
-        <div className="p-4">
+        <div className="p-4 min-h-screen">
           <Header />
           <main className="flex justify-center items-center h-screen">
             <p className="text-gray-500">Laddar...</p>
@@ -70,7 +85,7 @@ function Profile() {
   if (error) {
     return (
       <>
-        <div className="p-4">
+        <div className="p-4 min-h-screen">
           <Header />
           <main className="flex justify-center items-center h-screen">
             <p className="text-red-500">{error}</p>
@@ -83,38 +98,37 @@ function Profile() {
 
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 pb-20 min-h-screen">
         <Header />
         <main className="flex flex-col gap-6">
-          {/* Användarinfo */}
           <section className="flex flex-col gap-3">
-            <h1 className="text-2xl font-bold">Min Profil</h1>
-            {user && (
-              <div className="bg-white p-4 rounded-lg shadow">
-                <p className="text-lg font-semibold">{user.name}</p>
-                <p className="text-gray-600">{user.email}</p>
-              </div>
-            )}
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-bold">Min Profil</h1>
+              <button 
+                onClick={handleLogout}
+                className="text-sm text-gray-500 hover:text-red-500 transition underline"
+              >
+                Logga ut
+              </button>
+            </div>
           </section>
 
-          {/* Kommande meetups */}
           <section className="flex flex-col gap-3">
             <h2 className="text-xl font-bold">Anmälda Meetups</h2>
             {upcomingMeetups.length > 0 ? (
               upcomingMeetups.map((meetup) => (
-                <MeetupCard key={meetup.id} meetup={meetup} />
+                <MeetupCard key={meetup._id} meetup={meetup} />
               ))
             ) : (
               <p className="text-gray-500">Du har inga anmälda meetups</p>
             )}
           </section>
 
-          {/* Tidigare meetups */}
           <section className="flex flex-col gap-3">
             <h2 className="text-xl font-bold">Tidigare Meetups</h2>
             {pastMeetups.length > 0 ? (
               pastMeetups.map((meetup) => (
-                <MeetupCard key={meetup.id} meetup={meetup} />
+                <MeetupCard key={meetup._id} meetup={meetup} />
               ))
             ) : (
               <p className="text-gray-500">Du har inga tidigare meetups</p>
