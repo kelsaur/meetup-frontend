@@ -16,8 +16,9 @@ function App() {
         <Route path="/register" element={<Register />} /> 
         <Route path="/login" element={<Login />} /> 
         <Route path="/dashboard" element={<MeetupList />} />
-        <Route path="/meetup" element={<MeetupDetail />} />
+        <Route path="/meetup/:id" element={<MeetupDetail />} />
         <Route path="/profile" element={<Profile />} />
+
         
         
       </Routes>
