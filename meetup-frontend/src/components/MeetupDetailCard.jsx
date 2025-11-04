@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import HostIcon from "../assets/host_icon.svg";
-import TimeIcon from "../assets/time_icon.svg";
-import LocationIcon from "../assets/location_icon.svg";
+import HostIcon from "../assets/host_icon.png";
+import TimeIcon from "../assets/time_icon.png";
+import LocationIcon from "../assets/location_icon.png";
 import AttendeesIcon from "../assets/attendees_icon.png";
 
 /* Title, host, time, and location will be fetched from api, and linked to meetup.id from api */
