@@ -5,7 +5,7 @@ import ProfileNav from "../assets/profile_layout_icon.png";
 
 function Navbar() {
   return (
-    <nav className="fixed bottom-0 flex justify-center w-full h-15 bg-[#132a3d] rounded-t-xl">
+    <nav className="sticky bottom-0 flex justify-center w-full h-15 bg-[#132a3d] rounded-t-xl">
       <div className="flex gap-20 justify-center items-center">
         <NavLink
           to="/dashboard"

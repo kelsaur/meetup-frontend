@@ -16,8 +16,12 @@ function SearchInput() {
           <img src={DropdownIcon} alt="Filter" className="w-5 h-5" />
         </button>
 
+        <label htmlFor="search" className="sr-only">
+          Sök efter meetups
+        </label>
         <input
-          type="text"
+          id="search"
+          type="search"
           placeholder="Sök efter meetups"
           className="flex-1 bg-transparent border-none focus:outline-none text-gray-700 placeholder-gray-400 px-2"
         />
