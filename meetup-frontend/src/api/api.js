@@ -3,14 +3,14 @@ const API_URL = "https://meetup-backend-latest-pdua.onrender.com";
 // Hjälpfunktion för att hantera svar från fetch
 async function handleApiResponse(response) {
     let data;
-    // Försök först att läsa svaret som JSON
+
     try {
         data = await response.json();
     } catch (jsonError) {
         // Om det misslyckas, läs det som ren text
         const textResponse = await response.text();
         console.warn('Backend did not return valid JSON. Response:', textResponse);
-        // Om status inte är OK, kasta ett fel med textsvaret
+
         if (!response.ok) {
             throw new Error(textResponse || `HTTP error! Status: ${response.status}`);
         }
@@ -18,15 +18,14 @@ async function handleApiResponse(response) {
         return { message: textResponse || 'Successful operation (non-JSON response)' };
     }
 
-    // Om svaret inte är OK (d.v.s. status 4xx eller 5xx), kasta ett fel
     if (!response.ok) {
-        // Backend skickar { message: "..." } eller { error: "..." }
         throw new Error(data.message || data.error || `HTTP error! Status: ${response.status}`);
     }
 
-    return data; // Returnera JSON-datan
+    return data;
 }
 
+// getMeetups - hitta alla meetups
 export const getMeetups = async () => {
 	const res = await fetch(`${API_URL}/api/meetups/getMeetups`);
 	const meetups = await res.json();
@@ -40,10 +39,6 @@ export const getMeetupById = async () => {
 
 	console.log(meetup);
 };
-
-// createBooking - vid anmälan
-
-// deleteBooking - vid avregistrering
 
 // createUser - skapa konto
 export const createUser = async (userData) => {
@@ -59,7 +54,6 @@ export const createUser = async (userData) => {
         
         const data = await handleApiResponse(response);
         
-        // Spara token och user info om registreringen lyckas
         if (data.token) {
             localStorage.setItem('token', data.token);
             localStorage.setItem('userId', data.user.id);
@@ -71,6 +65,36 @@ export const createUser = async (userData) => {
         throw error;
     }
 };
+
+// Logga in användare
+export const loginUser = async (credentials) => {
+    console.log('Frontend: Sending login credentials:', credentials);
+    try {
+        const response = await fetch(`${API_URL}/api/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials),
+        });
+        
+        const data = await handleApiResponse(response);
+        
+        if (data.token) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userId', data.user.id);
+        }
+        
+        return data;
+    } catch (error) {
+        console.error('Frontend: Error during login:', error.message);
+        throw error;
+    }
+};
+
+// createBooking - vid anmälan
+
+// deleteBooking - vid avregistrering
 
 // getUser - vid inloggning/profil-vy
 

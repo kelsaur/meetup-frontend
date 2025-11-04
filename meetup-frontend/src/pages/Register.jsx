@@ -12,21 +12,12 @@ function Register() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  console.log("Register component rendered");
-
-  // Temporär funktion för att testa om knappen är klickbar
-  const handleButtonClick = () => {
-    console.log("Button clicked!"); // DENNA MÅSTE LOGGAS NÄR DU KLICKAR PÅ KNAPPEN
-  };
-
   const handleSubmit = async (event) => {
-    console.log("handleSubmit called"); // DENNA MÅSTE LOGGAS NÄR FORMULÄRET SKICKAS
     event.preventDefault();
     setError('');
 
     if (!username || !email || !password) {
       setError('Alla fält måste fyllas i.');
-      console.log("Validation failed: All fields required.");
       return;
     }
 
@@ -36,14 +27,12 @@ function Register() {
       password: password,
     };
 
-    console.log('Registreringsdata redo att skickas:', userData);
-
     try {
       const response = await createUser(userData);
       console.log('Registrering lyckades:', response);
       navigate('/login');
     } catch (err) {
-      console.error('Fel vid registrering i komponent:', err.message || err);
+      console.error('Fel vid registrering:', err.message || err);
       setError(err.message || 'Ett oväntat fel inträffade vid registrering.');
     }
 
@@ -53,42 +42,35 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-8 sm:p-10 rounded-2xl shadow-lg text-center w-[430px] h-[932px] flex flex-col justify-between">
-        <header className="pt-20 flex flex-col items-center">
-          <img src={MeetUpLogo} alt="MeetUp Logo" className="mx-auto mb-4 w-60 h-60" />
+    <div className="p-4 min-h-screen flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-between h-full max-w-md w-full">
+        <header className="flex flex-col items-center mb-16">
+          <img src={MeetUpLogo} alt="MeetUp Logo" className="mb-8 w-60 h-60" />
           <h1 className="text-3xl font-bold text-gray-800">Skapa Konto</h1>
         </header>
 
-        <main className="flex-grow flex flex-col items-center justify-center px-8 space-y-6">
-          <form onSubmit={handleSubmit} className="w-full max-w-[300px] space-y-4">
+        <main className="flex-grow flex flex-col items-center justify-center px-8 w-full">
+          <form onSubmit={handleSubmit} className="w-full max-w-[300px] flex flex-col gap-4">
             {error && <p className="text-red-500 text-sm">{error}</p>}
-            <div>
-              <InputField
-                type="text"
-                placeholder="Användarnamn"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div>
-              <InputField
-                type="email"
-                placeholder="E-post"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div>
-              <InputField
-                type="password"
-                placeholder="Lösenord"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            {/* Lade till onClick här för att testa klickbarheten */}
-            <Button type="submit" onClick={handleButtonClick}>
+            <InputField
+              type="text"
+              placeholder="Användarnamn"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <InputField
+              type="email"
+              placeholder="E-post"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <InputField
+              type="password"
+              placeholder="Lösenord"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit">
               REGISTRERA
             </Button>
           </form>

@@ -4,14 +4,14 @@ import LinkButton from '../components/LinkButton';
 
 function Landing() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-2xl shadow-lg text-center w-[430px] h-[932px] flex flex-col justify-between">
-        <header className="pt-20 flex flex-col items-center">
-          <img src={MeetUpLogo} alt="MeetUp Logo" className="mx-auto w-60 h-60" />
+    <div className="p-4 min-h-screen flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-between h-full max-w-md w-full">
+        <header className="flex flex-col items-center mb-16">
+          <img src={MeetUpLogo} alt="MeetUp Logo" className="w-60 h-60" />
         </header>
 
-        <main className="flex flex-col items-center justify-center pb-60">
-          <div className="flex flex-col space-y-6 w-full max-w-[300px]">
+        <main className="flex flex-col items-center justify-center pb-60 w-full">
+          <div className="flex flex-col gap-6 w-full max-w-[300px]">
             <LinkButton to="/register">
               SKAPA KONTO
             </LinkButton>
