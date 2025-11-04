@@ -3,19 +3,14 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import MeetupDetailCard from "../components/MeetupDetailCard";
-import Button from "../components/Button";
 import { getMeetupById } from "../api/api";
+import RegisterButton from "../components/RegisterButton";
 
 function MeetupDetail() {
   const { id } = useParams();
   const [meetup, setMeetup] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const handleJoinClick = () => {
-    alert("Du har blivit anmält för denna meetup!");
-    /* Function to save to db here */
-  };
 
   useEffect(() => {
     (async () => {
@@ -34,7 +29,7 @@ function MeetupDetail() {
     <div className="flex flex-col justify-between h-screen">
       <div className="p-4">
         <Header />
-        <main>
+        <main className="flex flex-col gap-5">
           {error && (
             <p className="text-sm text-red-600">
               Kunde inte hämta meetup: {error}
@@ -44,11 +39,7 @@ function MeetupDetail() {
           {!isLoading && !error && meetup && (
             <>
               <MeetupDetailCard meetup={meetup} />
-              <div className="flex justify-center mt-5">
-                <Button onClick={handleJoinClick} className="w-xs">
-                  ANMÄL
-                </Button>
-              </div>
+              <RegisterButton meetupId={meetup._id} />
             </>
           )}
         </main>

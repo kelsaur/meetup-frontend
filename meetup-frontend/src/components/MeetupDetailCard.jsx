@@ -4,8 +4,6 @@ import TimeIcon from "../assets/time_icon.png";
 import LocationIcon from "../assets/location_icon.png";
 import AttendeesIcon from "../assets/attendees_icon.png";
 
-/* Title, host, time, and location will be fetched from api, and linked to meetup.id from api */
-
 function MeetupDetailCard({ meetup }) {
   const {
     title,
@@ -26,7 +24,7 @@ function MeetupDetailCard({ meetup }) {
     });
 
   return (
-    <div className="flex flex-col bg-[#d2d4d9] p-5 w-full h-[40rem] rounded-2xl">
+    <div className="flex flex-col bg-[#d2d4d9] p-5 w-full h-[38rem] rounded-2xl">
       <article className="flex flex-col justify-between h-full">
         <header className="flex w-full justify-between">
           <h3 className="text-2xl">{title}</h3>

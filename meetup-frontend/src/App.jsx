@@ -18,9 +18,6 @@ function App() {
         <Route path="/dashboard" element={<MeetupList />} />
         <Route path="/meetup/:id" element={<MeetupDetail />} />
         <Route path="/profile" element={<Profile />} />
-
-        
-        
       </Routes>
     </>
   )
