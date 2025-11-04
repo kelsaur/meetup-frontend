@@ -39,7 +39,6 @@ export const getMeetups = async () => {
         "Content-Type": "application/json",
       },
     });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     return await handleApiResponse(response);
   } catch (error) {
@@ -49,10 +48,16 @@ export const getMeetups = async () => {
 };
 
 export const getMeetupById = async (id) => {
-  const response = await fetch(`${API_URL}/api/meetups/${id}`, {
-    headers: { Accept: "application/json" },
-  });
-  return handleApiResponse(response);
+  try {
+    const response = await fetch(`${API_URL}/api/meetups/${id}`, {
+      headers: { Accept: "application/json" },
+    });
+
+    return await handleApiResponse(response);
+  } catch (error) {
+    console.error("getMeetupById failed:", error);
+    throw error;
+  }
 };
 
 // createUser - skapa konto
@@ -107,46 +112,72 @@ export const loginUser = async (credentials) => {
   }
 };
 
-// createBooking - vid anmälan
+// registerForMeetup - vid anmälan
+export const registerForMeetup = async ({ meetupId, token }) => {
+  console.log("Frontend sending register to api");
+
+  if (!token) {
+    throw new Error("Token missing");
+  }
+  try {
+    const response = await fetch(
+      `${API_URL}/api/meetups/${meetupId}/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      }
+    );
+
+    const data = await handleApiResponse(response);
+    console.log(data, "Register successful");
+    return data;
+  } catch (error) {
+    console.error("getMeetupById failed:", error);
+    throw error;
+  }
+};
 
 // deleteBooking - vid avregistrering
 
 // Get user
 export const getUser = async (userId) => {
-    console.log('Frontend: Fetching user info for:', userId);
-    try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`${API_URL}/api/users/${userId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-        });
-        
-        return await handleApiResponse(response);
-    } catch (error) {
-        console.error('Frontend: Error fetching user:', error.message);
-        throw error;
-    }
+  console.log("Frontend: Fetching user info for:", userId);
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/api/users/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return await handleApiResponse(response);
+  } catch (error) {
+    console.error("Frontend: Error fetching user:", error.message);
+    throw error;
+  }
 };
 
 // Get user meetups
 export const getUserMeetups = async (userId) => {
-    console.log('Frontend: Fetching meetups for user:', userId);
-    try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`${API_URL}/api/users/${userId}/meetups`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-        });
-        
-        return await handleApiResponse(response);
-    } catch (error) {
-        console.error('Frontend: Error fetching user meetups:', error.message);
-        throw error;
-    }
+  console.log("Frontend: Fetching meetups for user:", userId);
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/api/users/${userId}/meetups`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return await handleApiResponse(response);
+  } catch (error) {
+    console.error("Frontend: Error fetching user meetups:", error.message);
+    throw error;
+  }
 };
