@@ -6,6 +6,7 @@ import Landing from './pages/Landing';
 import './App.css';
 import Register from './pages/Register';
 import Login from './pages/Login'; 
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} /> 
         <Route path="/dashboard" element={<MeetupList />} />
         <Route path="/meetup" element={<MeetupDetail />} />
-        {/*<Route path="/profile" element={<Profile />} /> This will be used once the page is created*/}
+        <Route path="/profile" element={<Profile />} />
         
         
       </Routes>
