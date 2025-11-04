@@ -13,7 +13,10 @@ function Navbar() {
         >
           <img src={DashboardNav} alt="Link to dashboard" />
         </NavLink>
-        <NavLink className="flex items-center justify-center w-10 h-10 rounded-full">
+        <NavLink 
+          to="/profile"
+          className="flex items-center justify-center w-10 h-10 rounded-full"
+        >
           <img src={ProfileNav} alt="Link to Profile" />
         </NavLink>
       </div>

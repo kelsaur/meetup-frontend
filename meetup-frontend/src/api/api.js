@@ -111,6 +111,42 @@ export const loginUser = async (credentials) => {
 
 // deleteBooking - vid avregistrering
 
-// getUser - vid inloggning/profil-vy
+// Get user
+export const getUser = async (userId) => {
+    console.log('Frontend: Fetching user info for:', userId);
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_URL}/api/users/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        
+        return await handleApiResponse(response);
+    } catch (error) {
+        console.error('Frontend: Error fetching user:', error.message);
+        throw error;
+    }
+};
 
-// getUserMeetups - se alla inloggade användarens meetups. Hur delar vi upp de till anmälda / tidigare meetups ?
+// Get user meetups
+export const getUserMeetups = async (userId) => {
+    console.log('Frontend: Fetching meetups for user:', userId);
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_URL}/api/users/${userId}/meetups`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        
+        return await handleApiResponse(response);
+    } catch (error) {
+        console.error('Frontend: Error fetching user meetups:', error.message);
+        throw error;
+    }
+};
