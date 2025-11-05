@@ -14,7 +14,14 @@ function MeetupList() {
     (async () => {
       try {
         const data = await getMeetups();
-        setMeetups(Array.isArray(data) ? data : []);
+        const now = new Date();
+
+        const upcoming = (Array.isArray(data) ? data : [])
+          .filter((m) => new Date(m.date) >= now)
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        setMeetups(upcoming);
+        //setMeetups(Array.isArray(data) ? data : []);
       } catch (error) {
         setError(error instanceof Error ? error.message : "Okänt fel");
       } finally {
