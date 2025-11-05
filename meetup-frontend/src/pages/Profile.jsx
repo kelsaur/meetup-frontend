@@ -102,22 +102,26 @@ function Profile() {
         <Header />
         <main className="flex flex-col gap-6">
           <section className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold">Min Profil</h1>
-              <button 
-                onClick={handleLogout}
-                className="text-sm text-gray-500 hover:text-red-500 transition underline"
-              >
-                Logga ut
-              </button>
-            </div>
+            {user && (
+              <div className="bg-white p-4 rounded-lg shadow">
+                <div className="flex items-center justify-between">
+                  <p className="text-2xl font-normal">{user.name}</p>
+                  <button 
+                    onClick={handleLogout}
+                    className="text-sm text-gray-500 hover:text-red-500 transition underline"
+                  >
+                    Logga ut
+                  </button>
+                </div>
+              </div>
+            )}
           </section>
 
           <section className="flex flex-col gap-3">
-            <h2 className="text-xl font-bold">Anmälda Meetups</h2>
+            <h2 className="text-[32px] font-normal leading-none">Anmälda meetups</h2>
             {upcomingMeetups.length > 0 ? (
               upcomingMeetups.map((meetup) => (
-                <MeetupCard key={meetup._id} meetup={meetup} />
+                <MeetupCard key={meetup._id} className="bg-lime-500" meetup={meetup} />
               ))
             ) : (
               <p className="text-gray-500">Du har inga anmälda meetups</p>
@@ -125,10 +129,10 @@ function Profile() {
           </section>
 
           <section className="flex flex-col gap-3">
-            <h2 className="text-xl font-bold">Tidigare Meetups</h2>
+            <h2 className="text-[32px] font-normal leading-none">Tidigare meetups</h2>
             {pastMeetups.length > 0 ? (
               pastMeetups.map((meetup) => (
-                <MeetupCard key={meetup._id} meetup={meetup} />
+                <MeetupCard key={meetup._id} meetup={meetup} isPast={true} />
               ))
             ) : (
               <p className="text-gray-500">Du har inga tidigare meetups</p>
