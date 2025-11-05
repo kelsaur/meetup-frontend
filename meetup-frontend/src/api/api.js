@@ -135,12 +135,38 @@ export const registerForMeetup = async ({ meetupId, token }) => {
     console.log(data, "Register successful");
     return data;
   } catch (error) {
-    console.error("getMeetupById failed:", error);
+    console.error("registerForMeetup failed:", error);
     throw error;
   }
 };
 
-// deleteBooking - vid avregistrering
+// unRegister - vid avregistrering
+export const unregisterFromMeetup = async ({ meetupId, token }) => {
+  console.log("Frontend sending UNregister to api");
+
+  if (!token) {
+    throw new Error("Token missing");
+  }
+  try {
+    const response = await fetch(
+      `${API_URL}/api/meetups/${meetupId}/unregister`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      }
+    );
+
+    const data = await handleApiResponse(response);
+    console.log(data, "Unregister successful");
+    return data;
+  } catch (error) {
+    console.error("unRegisterFromMeetup failed:", error);
+    throw error;
+  }
+};
 
 // Get user
 export const getUser = async (userId) => {

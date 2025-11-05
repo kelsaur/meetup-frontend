@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import { registerForMeetup } from "../api/api";
+import { unregisterFromMeetup } from "../api/api";
 
-function RegisterButton({ meetupId, onRegistered }) {
+function UnregisterButton({ meetupId, onUnregistered }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  const handleRegister = async () => {
+  const handleUnregister = async () => {
     setLoading(true);
     setMessage("");
     setError("");
@@ -20,11 +20,11 @@ function RegisterButton({ meetupId, onRegistered }) {
     }
 
     try {
-      await registerForMeetup({ meetupId, token });
-      setMessage("Du är nu anmäld!");
-      onRegistered?.();
+      await unregisterFromMeetup({ meetupId, token });
+      setMessage("Du är nu avregistrerad från meetup!");
+      onUnregistered?.();
     } catch (error) {
-      setError("Kunde inte anmäla. Du är redan anmäld eller försök igen.");
+      setError("Kunde inte avregistrera. Du är inte anmäld för denna meetup.");
     } finally {
       setLoading(false);
     }
@@ -32,8 +32,12 @@ function RegisterButton({ meetupId, onRegistered }) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <Button onClick={handleRegister} disabled={loading} className="w-xs">
-        {loading ? "Anmäler…" : "ANMÄL"}
+      <Button
+        onClick={handleUnregister}
+        disabled={loading}
+        className="w-xs bg-[#fe7362]"
+      >
+        {loading ? "Avregistrerar…" : "AVREGISTRERA"}
       </Button>
       {message && <p className="text-green-700 text-sm">{message}</p>}
       {error && <p className="text-red-600 text-sm">{error}</p>}
@@ -41,4 +45,4 @@ function RegisterButton({ meetupId, onRegistered }) {
   );
 }
 
-export default RegisterButton;
+export default UnregisterButton;
