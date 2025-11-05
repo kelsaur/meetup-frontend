@@ -2,7 +2,9 @@
 
 En fullstack-applikation för att se och anmäla sig till meetups. Detta är frontend-delen byggd med React och Tailwind CSS.
 
-- **Backend Repository:**  [https://github.com/WhizWhuz/meetup-backend](https://github.com/WhizWhuz/meetup-backend)
+[**Live app**](http://fibonachos-meetup-frontend.s3-website.eu-north-1.amazonaws.com/)
+
+[**Backend Repository**](https://github.com/WhizWhuz/meetup-backend)
 
 - ## ✨ Funktioner
 
@@ -22,6 +24,11 @@ En fullstack-applikation för att se och anmäla sig till meetups. Detta är fro
   - Lista alla meetups
   - Visa meetup-detaljer
   - Sökfunktion
+
+- ✅ **Meetup detalj-visning**
+  - Detaljerad beskrivning av meetup:en
+  - Visa antal platser & bokade platser
+  - Anmäl/avregistrera knapp
 
 - ✅ **Responsiv design**
   - Mobilanpassad layout
