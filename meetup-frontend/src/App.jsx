@@ -1,33 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-
-import './App.css'
+import MeetupList from './pages/MeetupList';
+import MeetupDetail from './pages/MeetupDetail';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Landing from './pages/Landing';
+import './App.css';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-  const [count, setCount] = useState(0)
-//Test
   return (
     <>
-      <div class="flex justify-center bg-red-100">
-  
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div>
-        <button class="bg-blue-500 hover:bg-fuchsia-500 p-1 rounded-md" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Testing Tailwind
-        </p>
-      </div>
-      <p>
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <MeetupList />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/profile" 
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/meetup/:id" 
+          element={
+            <ProtectedRoute>
+              <MeetupDetail />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
