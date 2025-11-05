@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MeetupCard from "../components/MeetupCard";
 import SearchInput from "../components/SearchInput";
 import Header from "../components/Header";
@@ -9,12 +9,20 @@ function MeetupList() {
   const [meetups, setMeetups] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     (async () => {
       try {
         const data = await getMeetups();
-        setMeetups(Array.isArray(data) ? data : []);
+        const now = new Date();
+
+        const upcoming = (Array.isArray(data) ? data : [])
+          .filter((m) => new Date(m.date) >= now)
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        setMeetups(upcoming);
+        //setMeetups(Array.isArray(data) ? data : []);
       } catch (error) {
         setError(error instanceof Error ? error.message : "Okänt fel");
       } finally {
@@ -23,13 +31,24 @@ function MeetupList() {
     })();
   }, []);
 
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return meetups;
+    return meetups.filter((m) => {
+      const inTitle = (m.title || "").toLowerCase().includes(q);
+      const inDesc = (m.description || "").toLowerCase().includes(q);
+      const inLocation = (m.location || "").toLowerCase().includes(q);
+      return inTitle || inDesc || inLocation;
+    });
+  }, [meetups, query]);
+
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 min-h-[100dvh] pb-20">
         <Header />
         <main className="flex flex-col gap-5">
           <section>
-            <SearchInput />
+            <SearchInput value={query} onChange={setQuery} />
           </section>
           <section
             aria-label="Lista av alla meetups"
@@ -41,9 +60,16 @@ function MeetupList() {
               </p>
             )}
             {isLoading && <p className="text-sm text-gray-600">Laddar…</p>}
+
+            {!isLoading && !error && filtered.length === 0 && (
+              <p className="text-sm text-gray-600">
+                Inga meetups matchar sökningen.
+              </p>
+            )}
+
             {!isLoading &&
               !error &&
-              meetups.map((m) => <MeetupCard key={m._id} meetup={m} />)}
+              filtered.map((m) => <MeetupCard key={m._id} meetup={m} />)}
           </section>
         </main>
       </div>

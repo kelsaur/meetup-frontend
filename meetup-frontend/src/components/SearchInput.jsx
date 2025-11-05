@@ -1,12 +1,13 @@
 import DropdownIcon from "../assets/dropdown_icon.svg";
 import SearchIcon from "../assets/search_icon.svg";
 
-function SearchInput() {
+function SearchInput({ value, onChange }) {
   return (
     <div className="relative w-full max-w-md mx-auto">
       <form
         aria-label="Sök efter meetups"
         className="flex items-center bg-gray-100 rounded-full shadow-sm px-4 py-2"
+        onSubmit={(e) => e.preventDefault()}
       >
         <button
           type="button"
@@ -24,6 +25,8 @@ function SearchInput() {
           type="search"
           placeholder="Sök efter meetups"
           className="flex-1 bg-transparent border-none focus:outline-none text-gray-700 placeholder-gray-400 px-2"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
         />
 
         <button
