@@ -6,6 +6,8 @@ En fullstack-applikation för att se och anmäla sig till meetups. Detta är fro
 
 [**Backend Repository**](https://github.com/WhizWhuz/meetup-backend)
 
+[**Presentation**](https://www.youtube.com/watch?v=bJwsDJjZKCg)
+
 - ## ✨ Funktioner
 
 ### Implementerade funktioner:
